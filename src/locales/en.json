@@ -1,0 +1,15 @@
+{
+    "Name": "Name",
+    "Type": "Type",
+    "Region": "Region",
+    "Notes": "Notes",
+    "Height": "Cultivated at a height of ",
+    "Unit": " mosl",
+    "Login": "Login",
+    "Username": "Username",
+    "Password": "Password",
+    "Enter": "Enter",
+    "Cancel": "Cancel",
+    "Error": "Authentication error. Review your credentials",
+    "Contact": "Contact us: +57 3102105263 - info@elaromagico.com - @elaromagico"
+}

@@ -1,6 +1,7 @@
+import { FormattedMessage } from 'react-intl';
 import imagen from '../imagen.png'
 import Login from './Login'
-import { Image } from 'react-bootstrap';
+import { Image, Container } from 'react-bootstrap';
 
 function PaginaLogin(props) {
   
@@ -8,10 +9,24 @@ function PaginaLogin(props) {
     <div>
         <h1>El aroma magico</h1>
         <hr />
-        <Image src = {imagen} alt = "banner" style={{ maxWidth: '1500px' }}/>
+        <Container className="d-flex justify-content-center align-items-center">
+          <Image src = {imagen} alt = "banner" style={{ maxWidth: '1300px' }}/>
+        </Container>
+        
         <hr />
-        <Login/>
+        <Container className="d-flex justify-content-center align-items-center">
+          <Login/>  
+        </Container>
+        
 
+        <br>
+    </br>
+    <br>
+    </br>
+
+    <Container className="d-flex justify-content-center align-items-center">
+    <p><FormattedMessage id = "Contact"/></p>
+        </Container>
     </div>
   );
 }

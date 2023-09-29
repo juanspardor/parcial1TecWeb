@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Col, Row, Container, Image } from 'react-bootstrap';
 import Detail from './Detail';
+import { FormattedMessage } from 'react-intl';
 function PaginaDatos(){
 
     const [show, setShow] = useState(false);
@@ -13,6 +14,7 @@ function PaginaDatos(){
     setCafeSeleccionado(pCafe)
   };
 
+  
     const [cafes, setCafes] = useState([]);
 
     useEffect(() => {
@@ -20,24 +22,26 @@ function PaginaDatos(){
         fetch(URL).then(data => data.json()).then(data => {setCafes(data)})
       }, [])
 
-      console.log(cafes)
     return(
         <div>
-        <h1>El aroma magico</h1>
+       <h1>El aroma magico</h1>
         <hr />
-        <Image src = {imagen} alt = "banner" style={{ maxWidth: '1500px' }}/>
+        <Container className="d-flex justify-content-center align-items-center">
+          <Image src = {imagen} alt = "banner" style={{ maxWidth: '1300px' }}/>
+        </Container>
+        
         <hr />
 
         <Container>
         <Row>
           <Col sm={8}>
-          <Table striped bordered hover size="sm">
+          <Table>
       <thead>
-        <tr>
+        <tr style={{ backgroundColor: 'grey', color: 'white' }}>
           <th>#</th>
-          <th>Nombre</th>
-          <th>Tipo</th>
-          <th>Region</th>
+          <th><FormattedMessage id = "Name"/></th>
+          <th><FormattedMessage id = "Type"/></th>
+          <th><FormattedMessage id = "Region"/></th>
         </tr>
       </thead>
       <tbody>
@@ -59,6 +63,14 @@ function PaginaDatos(){
         </Row>
       </Container>
 
+      <br>
+    </br>
+    <br>
+    </br>
+
+    <Container className="d-flex justify-content-center align-items-center">
+    <p><FormattedMessage id = "Contact"/></p>
+        </Container>
     </div>
     );
 }

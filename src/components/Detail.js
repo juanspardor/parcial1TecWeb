@@ -1,5 +1,6 @@
 import { Card, Image } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { FormattedMessage } from 'react-intl';
 function Detail(props)
 {
 
@@ -10,22 +11,21 @@ function Detail(props)
         fetch(URL).then(data => data.json()).then(data => {setCafes(data)})
       }, [props.id])
 
-console.log(cafe)
+
     return(
         <div>
-            <Card>
-                <Card.Body className="text-center">
-                    <h3>
+            <Card className="shadow" style = {{width:'350px',backgroundColor: "#F8F1F1",borderRadius: '0', border:'1px solid black'}} >
+                <Card.Body className="text-center" >
+                    <h4 className="fw-bold">
                         {cafe.nombre}
-                    </h3>
-                    <h4>
-                        {cafe.fecha_cultivo}
                     </h4>
-                    <Image src = {cafe.imagen} alt = "Foto del cafe" style={{ maxWidth: '300px' }}/>
-                    <p>Notas</p>
+                    <h5>
+                        {cafe.fecha_cultivo}
+                    </h5>
+                    <Image src = {cafe.imagen} alt = "Foto del cafe" style={{ maxHeight: '165px' }}/>
+                    <p style = {{margin: '0px'}}><FormattedMessage id = "Notes"/></p>
                     <p>{cafe.notas}</p>
-
-                    <p>Cultivado a una altura de {cafe.altura} msnm</p>
+                    <h5 className="fw-bold"><FormattedMessage id = "Height"/> {cafe.altura} <FormattedMessage id = "Unit"/></h5>
                 </Card.Body>
             </Card>
         </div>
