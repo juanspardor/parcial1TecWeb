@@ -21,10 +21,10 @@ function Login(props) {
   const hangleUserCahnge = (e) => {
     const valor = e.target.value;
     setFormValues({ ...formValues, nombreUsuario: e.target.value });
-    if (valor.length < 5) {
-      setValidationStates({ ...validationStates, userState: true });
-    } else {
+    if (valor === "admin") {
       setValidationStates({ ...validationStates, userState: false });
+    } else {
+      setValidationStates({ ...validationStates, userState: true });
     }
   };
 
@@ -32,10 +32,10 @@ function Login(props) {
     const valor = e.target.value;
     setFormValues({ ...formValues, password: valor });
 
-    if (valor.length < 5) {
-      setValidationStates({ ...validationStates, passwordState: true });
-    } else {
+    if (valor === "pass") {
       setValidationStates({ ...validationStates, passwordState: false });
+    } else {
+      setValidationStates({ ...validationStates, passwordState: true });
     }
   };
 
