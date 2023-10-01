@@ -1,9 +1,12 @@
 import { Form, Row, Col, Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+
 function Login(props) {
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     nombreUsuario: "",
     password: "",
@@ -13,40 +16,67 @@ function Login(props) {
     passwordState: false,
   });
 
-  const limpiarCampos = () =>
-  {
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: formValues.nombreUsuario,
+          password: formValues.password,
+        }), 
+      });
+
+      console.log(response);
+      if (response.ok) {
+        navigate("/cafes");
+      } else {
+        setValidationStates({
+          ...validationStates,
+          passwordState: true,
+          userState: true,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const limpiarCampos = () => {
     setFormValues({ ...formValues, nombreUsuario: "" });
     setFormValues({ ...formValues, password: "" });
-  }
+  };
   const hangleUserCahnge = (e) => {
     const valor = e.target.value;
-    setFormValues({ ...formValues, nombreUsuario: e.target.value });
-    if (valor.length < 5) {
-      setValidationStates({ ...validationStates, userState: true });
-    } else {
-      setValidationStates({ ...validationStates, userState: false });
-    }
+    setFormValues({ ...formValues, nombreUsuario: valor });
   };
 
   const handlePasswordChange = (e) => {
     const valor = e.target.value;
     setFormValues({ ...formValues, password: valor });
-
-    if (valor.length < 5) {
-      setValidationStates({ ...validationStates, passwordState: true });
-    } else {
-      setValidationStates({ ...validationStates, passwordState: false });
-    }
   };
 
   return (
     <div>
-      <p style = {{fontWeight: 'bold'}}><FormattedMessage id = "Login"/></p>
-      <Card style={{ backgroundColor: "#F8F1F1", width: '50rem', borderRadius: '0'}} className="shadow">
+      <p style={{ fontWeight: "bold" }}>
+        <FormattedMessage id="Login" />
+      </p>
+      <Card
+        style={{
+          backgroundColor: "#F8F1F1",
+          width: "50rem",
+          borderRadius: "0",
+        }}
+        className="shadow"
+      >
         <Card.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label style = {{fontWeight: 'bold'}} ><FormattedMessage id = "Username"/></Form.Label>
+              <Form.Label style={{ fontWeight: "bold" }}>
+                <FormattedMessage id="Username" />
+              </Form.Label>
               <Form.Control
                 type="mb-3"
                 placeholder=""
@@ -59,7 +89,9 @@ function Login(props) {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label style = {{fontWeight: 'bold'}}><FormattedMessage id = "Password"/></Form.Label>
+              <Form.Label style={{ fontWeight: "bold" }}>
+                <FormattedMessage id="Password" />
+              </Form.Label>
               <Form.Control
                 type="mb-3"
                 placeholder=""
@@ -71,19 +103,33 @@ function Login(props) {
           </Form>
           <Row className="justify-content-center align-items-center">
             <Col className="text-center">
-              <Button className="sharp-corner-button" style={{ backgroundColor: "#94A891", fontWeight: 'bold' }}>
-                <Link to="/cafes" style={{ color: "black",textDecoration: 'none' }}>
-                <FormattedMessage id = "Enter"/>
-                </Link>
+              <Button
+                className="sharp-corner-button"
+                style={{ backgroundColor: "#94A891", fontWeight: "bold", color: "black" }}
+                onClick={() => handleLogin()}
+              >
+                <FormattedMessage id="Enter" />
               </Button>
             </Col>
             <Col className="text-center">
-              <Button className="sharp-corner-button" onClick={limpiarCampos} style={{ color: "black", backgroundColor: "#C65E5A", fontWeight: 'bold' }}><FormattedMessage id = "Cancel"/></Button>
+              <Button
+                className="sharp-corner-button"
+                onClick={limpiarCampos}
+                style={{
+                  color: "black",
+                  backgroundColor: "#C65E5A",
+                  fontWeight: "bold",
+                }}
+              >
+                <FormattedMessage id="Cancel" />
+              </Button>
             </Col>
           </Row>
 
           {(validationStates.passwordState || validationStates.userState) && (
-            <p style = {{margin: '5px', color: 'red', fontWeight: 'bold'}}><FormattedMessage id = "Error"/></p>
+            <p style={{ margin: "5px", color: "red", fontWeight: "bold" }}>
+              <FormattedMessage id="Error" />
+            </p>
           )}
         </Card.Body>
       </Card>
